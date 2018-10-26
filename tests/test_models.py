@@ -1,4 +1,4 @@
-#encoding: utf8
+# -*- coding: utf-8 -*-
 import datetime
 import json
 from unittest import TestCase
@@ -194,9 +194,6 @@ class QueryOutdatedQueriesTest(BaseTestCase):
 
 
 class QueryArchiveTest(BaseTestCase):
-    def setUp(self):
-        super(QueryArchiveTest, self).setUp()
-
     def test_archive_query_sets_flag(self):
         query = self.factory.create_query()
         db.session.flush()
@@ -247,9 +244,6 @@ class QueryArchiveTest(BaseTestCase):
 
 
 class QueryResultTest(BaseTestCase):
-    def setUp(self):
-        super(QueryResultTest, self).setUp()
-
     def test_get_latest_returns_none_if_not_found(self):
         found_query_result = models.QueryResult.get_latest(self.factory.data_source, "SELECT 1", 60)
         self.assertIsNone(found_query_result)
@@ -514,6 +508,7 @@ def _set_up_dashboard_test(d):
     d.w1.dashboard.is_draft = False
     d.w2.dashboard.is_draft = False
     d.w4.dashboard.is_draft = False
+
 
 class TestDashboardAll(BaseTestCase):
     def setUp(self):
