@@ -9,4 +9,6 @@
 <p> Few of the features and/or their behavior may be different as well. </p>
 <p> Every possible effort will be made to keep the backend in sync with Redash upstream as much as possible </p> 
 
+<p>Run ./build-all-images.sh to build all the docker images. </p>
+<p>Run ./start-services.sh to start the docker services.</p>
 
