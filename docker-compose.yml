@@ -1,8 +1,7 @@
 # This configuration file is for **development** setup. For production, refer to
 # docker-compose.production.yml.
-version: '3'
+version: '2'
 services:
-<<<<<<< HEAD
     server:
         image: redash-base 
         # command: dev_server
