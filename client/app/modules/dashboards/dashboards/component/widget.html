@@ -1,0 +1,27 @@
+<div class="widget-wrapper">
+	<div class="tile body-container widget-visualization">
+		<div class="body-row vis-header">
+			<div class="t-header widget clearfix">
+				<div class="dropdown pull-right widget-menu-remove">
+					<div class="actions">
+						<a (click)="deleteWidget(_widget.id)" title="Remove From Dashboard"><i class="zmdi zmdi-close"></i></a>
+					</div>
+				</div>
+				<div class="th-title">
+					<p >
+						<span >{{_widget.visualization.name}}</span>
+					</p>
+					<div class="text-muted query--description" [innerHtml]="_widget.visualization.description"></div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="!showSpinner" class="body-row-auto scrollbox vis-render-row">
+			<widget-renderer [type]="type" [rows]="rows" [cols]="columns" [chartOpts]="_widget.visualization.options" class="t-body"></widget-renderer>
+		</div>
+		<div *ngIf="showSpinner" class="body-row-auto spinner-container vis-render-row">
+			<div class="spinner">
+				<i class="zmdi zmdi-refresh zmdi-hc-spin zmdi-hc-5x"></i>
+			</div>
+		</div>
+	</div>
+</div>

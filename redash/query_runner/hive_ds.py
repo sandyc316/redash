@@ -54,23 +54,23 @@ class Hive(BaseSQLQueryRunner):
                 "username": {
                     "type": "string"
                 },
-                "use_http": {
-                    "type": "boolean",
-                    "title": "Use HTTP transport"
-                },
-                "http_scheme": {
-                    "type": "string",
-                    "title": "Scheme when using HTTP transport",
-                    "default": "https"
-                },
-                "http_path": {
-                    "type": "string",
-                    "title": "Path when using HTTP transport"
-                },
-                "http_password": {
-                    "type": "string",
-                    "title": "Password when using HTTP transport"
-                },
+                # "use_http": {
+                #     "type": "boolean",
+                #     "title": "Use HTTP transport"
+                # },
+                # "http_scheme": {
+                #     "type": "string",
+                #     "title": "Scheme when using HTTP transport",
+                #     "default": "https"
+                # },
+                # "http_path": {
+                #     "type": "string",
+                #     "title": "Path when using HTTP transport"
+                # },
+                # "http_password": {
+                #     "type": "string",
+                #     "title": "Password when using HTTP transport"
+                # },
             },
             "required": ["host"]
         }

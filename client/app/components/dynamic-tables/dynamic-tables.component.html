@@ -1,0 +1,47 @@
+<div class="dynamic-table-container">
+	<table class="table table-condensed table-hover">
+		<thead>
+			<tr>
+				<th *ngFor="let column of columns" (click)="onColumnHeaderClick($event, column)"
+					class="sortable-column">
+					<!-- <span *ngIf="(orderBy.length > 1) && (orderByColumnsIndex[column.name] > 0)"
+						class="sort-order-indicator">{{ orderByColumnsIndex[column.name] }}</span> -->
+					<span>{{column.name}}</span>
+					<!-- <i *ngIf="orderByColumnsIndex[column.name] > 0"
+						class="{
+							'fa': true,
+							'fa-caret-down': orderByColumnsDirection[column.name] > 0,
+							'fa-caret-up': orderByColumnsDirection[column.name] < 0
+						}"></i> -->
+				</th>
+				<th class="dynamic-table-spacer"></th>
+			</tr>
+		</thead>
+		<thead *ngIf="searchColumns.length > 0">
+			<th class="p-t-10 p-b-10 p-l-15 p-r-15" [attr.colspan]="columns.length + 1">
+				<input type="text" class="form-control" placeholder="Search..."
+					[(ngModel)]="searchTerm"
+					(change)="onSearchTermChanged()">
+			</th>
+		</thead>
+		<tbody>
+			<tr *ngFor="let row of rawRows; let i = index">
+				<td *ngFor="let column of columns; let j = index;">
+					{{rawRows[0][j]}}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="paginator-container" *ngIf="preparedRows.length > itemsPerPage">
+	<ul uib-pagination total-items="preparedRows.length"
+			items-per-page="itemsPerPage"
+			[(ngModel)]="currentPage"
+			max-size="6"
+			class="pagination"
+			boundary-link-numbers="true"
+			rotate="false"
+			next-text='&#8594;'
+			previous-text='&#8592;'
+			ng-change="onPageChanged()"></ul>
+</div>

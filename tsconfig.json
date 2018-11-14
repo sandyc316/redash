@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+     //    "module": "commonjs",
+	    // "allowJs": true,
+	    "target": "es5",
+	    // "strictNullChecks": true,
+	    // "suppressExcessPropertyErrors": false,
+	    // "suppressImplicitAnyIndexErrors": false,
+	    // "allowUnreachableCode": false,
+	    // "allowUnusedLabels": false,
+	    // "noImplicitReturns": true,
+	    // "noFallthroughCasesInSwitch": true,
+	    "experimentalDecorators": true,
+	    "lib": [
+	        "es2015",
+	        "dom"
+	    ],
+	    "baseUrl": "./client",
+	    "paths": {
+            "@app/*": ["app/*"],
+        }
+    },
+    "exclude": [
+		"**/*.spec.ts",
+		"node_modules"
+	]
+}

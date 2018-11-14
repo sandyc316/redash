@@ -1,0 +1,129 @@
+
+<div class="row editor" resizable r-directions="['bottom']" r-flex="true" resizable-toggle toggle-shortcut="Alt+D" style="min-height: 11px; max-height: 70vh;">
+	<section>
+		<div class="container p-15 m-b-10" >
+			<p style=" margin-bottom: 0px;" class="editor__container">
+				<ace-editor [(ngModel)]="query.query" [options]="editorOptions" mode="sql" style="height:175px;" #editor></ace-editor>
+			</p>
+
+			<div class="editor__control">
+				<div class="form-inline d-flex">
+					<!-- <button type="button" class="btn btn-default m-r-5" (click)="addNewParameter()" uib-tooltip-html="'Add New Parameter (<i>' + modKey + ' + P</i>)'"
+					tooltip-append-to-body="true">
+						<span>&nbsp;</span>
+					</button>
+
+					<button type="button" class="btn btn-default" (click)="formatQuery()" uib-tooltip="Format Query">
+						<span class="zmdi zmdi-format-indent-increase"></span>
+					</button> -->
+
+					<!-- <select class="form-control datasource-small flex-fill w-100" [disabled]="!isQueryOwner || !sourceMode" [(ngModel)]="query.data_source_id" (change)="updateDataSource()">
+						<option *ngFor="ds.id as ds.name for ds in dataSources" [value]="ds.id">{{ds.name}}
+						</option>
+					</select> -->
+
+					<button class="btn btn-default m-l-5" *ngIf="canEdit" (click)="saveQuery()" title="Save" uib-tooltip-html="modKey + ' + S'"
+					tooltip-append-to-body="true">
+						<span class="zmdi zmdi-floppy">&nbsp;</span>
+						<span class="hidden-xs">Save</span>
+						<span *ngIf="isDirty">&#42;</span>
+					</button>
+
+					<button type="button" class="btn btn-primary m-l-5" [disabled]="queryExecuting || !canExecuteQuery()" (click)="executeQuery()"
+					uib-tooltip-html="modKey + ' + Enter'" tooltip-append-to-body="true">
+						<span class="zmdi zmdi-play">&nbsp;</span>
+						<span class="hidden-xs">Execute</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+<div class="row query-metadata__mobile">
+	<div class="col-xs-4 text-left">
+		<span class="m-r-5">Created by</span>
+		<!-- <img src="{{ query.user.profile_image_url }}" class="profile__image_thumb"> -->
+		<strong>
+			<!-- <rd-time-ago value="query.created_at"></rd-time-ago> -->
+		</strong>
+	</div>
+	<div class="col-xs-4 text-center">
+		<span class="m-r-5">Updated by</span>
+		<!-- <img src="{{ query.last_modified_by.profile_image_url }}" class="profile__image_thumb"> -->
+		<strong>
+			<!-- <rd-time-ago value="query.updated_at"></rd-time-ago> -->
+		</strong>
+	</div>
+	<div class="col-xs-4 text-right">
+		<span class="query-metadata__property"> Refresh Schedule</span>
+		<!-- <a (click)="openScheduleForm()" *ngIf="!query.isNew()">{{query.schedule | scheduleHumanize}}</a> -->
+		<span *ngIf="query.isNew()">Never</span>
+	</div>
+</div>
+
+<section class="flex-fill p-relative t-body">
+	<div class="d-flex flex-column p-b-15 p-absolute" style="left: 0; top: 0; right: 0; bottom: 0;">
+		<div class="p-t-15 p-b-5" *ngIf="query.getParametersDefs().length > 0">
+			<!-- <parameters parameters="query.getParametersDefs()" sync-values="!query.isNew()" editable="sourceMode && canEdit"></parameters> -->
+		</div>
+		<!-- Query Execution Status -->
+		<div *ngIf="query.queryResult">
+			<div class="query-alerts">
+				<div class="alert alert-info m-t-15" *ngIf="query.queryResult.status == 'processing'">
+					Executing query&hellip;
+					<!-- <rd-timer timestamp="query.queryResult.getUpdatedAt()"></rd-timer> -->
+					<button type="button" class="btn btn-warning btn-xs pull-right" [disabled]="cancelling" (click)="cancelExecution()">Cancel
+					</button>
+				</div>
+				<div class="alert alert-info m-t-15" *ngIf="query.queryResult.status == 'loading-result'">
+					Loading results&hellip;
+					<!-- <rd-timer timestamp="query.queryResult.getUpdatedAt()"></rd-timer> -->
+				</div>
+				<div class="alert alert-info m-t-15" *ngIf="query.queryResult.status == 'waiting'">
+					Query in queue&hellip;
+					<!-- <rd-timer timestamp="query.queryResult.getUpdatedAt()"></rd-timer> -->
+					<button type="button" class="btn btn-warning btn-xs pull-right" [disabled]="cancelling" (click)="cancelExecution()">Cancel
+					</button>
+				</div>
+				<!-- <div class="alert alert-danger m-t-15" *ngIf="query.queryResult.getError()">
+					Error running query:
+					<strong>{{query.queryResult.getError()}}</strong>
+				</div> -->
+			</div>
+		</div>
+		<!-- End of Query Execution Status -->
+
+		<!-- tabs and data -->
+		<div *ngIf="showDataset" class="flex-fill p-relative">
+			<div class="d-flex flex-column p-absolute" style="left: 0; top: 0; right: 0; bottom: 0;">
+				<div class="p-10" *ngIf="showLog">
+				<p>Log Information:</p>
+				<!-- <p *ngFor="l in query.queryResult.getLog()">{{l}}</p> -->
+				</div>
+				<ul class="tab-nav">
+					<!-- <rd-tab *ngIf="!query.visualizations.length" tab-id="table" name="Table" base-path="query.getUrl(sourceMode)"></rd-tab> -->
+					<!-- <rd-tab tab-id="{{vis.id}}" name="{{vis.name}}" base-path="query.getUrl(sourceMode)" ngFor="vis in query.visualizations | orderBy:'id'">
+						<span class="remove" (click)="deleteVisualization($event, vis)" *ngIf="canEdit && !($first && (vis.type === 'TABLE'))">
+							<i class="zmdi zmdi-close"></i>
+						</span>
+					</rd-tab> -->
+					<!-- <li class="rd-tab tab-new-vis">
+						<a (click)="openVisualizationEditor()" class="btn btn-default" *ngIf="canEdit">
+							<i class="zmdi zmdi-plus"></i> New Visualization
+						</a>
+					</li> -->
+				</ul>
+
+				<!-- <div *ngIf="!query.visualizations.length" class="query__vis m-t-15 p-b-15 scrollbox">
+					<filters filters="filters"></filters>
+					<grid-renderer query-result="query.queryResult" items-per-page="50"></grid-renderer>
+				</div> -->
+
+				<!-- <div *ngIf="selectedTab == vis.id" ngFor="vis in query.visualizations" class="query__vis m-t-15 scrollbox">
+					<visualization-renderer visualization="vis" query-result="query.queryResult"></visualization-renderer>
+				</div> -->
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,28 @@
+<div class="row p-l-15 p-b-10 m-l-0 m-r-0 page-header--new page-header--query">
+	<div class="page-title col-sm-8 col-xs-7 p-0">
+		<favrites-control *ngIf="query.query" [item]="query" (onClick)="onFavClick()"></favrites-control>
+		<h3>
+			<edit-in-place [editable]="canEdit" (done)="saveName($event)" [ignoreBlanks]="true" [(value)]="query.name" ></edit-in-place>
+		</h3>
+		<!-- <span class="label label-default" *ngIf="query.is_draft && !query.is_archived">Unpublished</span>
+		<span class="label label-warning" *ngIf="query.is_archived" uib-popover="This query is archived and can't be used in dashboards, and won't appear in search results."
+		popover-placement="right" popover-trigger="'mouseenter'">Archived</span> -->
+		<!-- <tags-control item="query" can-edit="isQueryOwner" get-available-tags="loadTags" on-edit="saveTags()"></tags-control> -->
+	</div>
+
+	<div class="col-sm-4 col-xs-5 p-0 source-control text-right">
+
+		<!-- <button class="btn btn-default btn-publish" (click)="togglePublished()" *ngIf="query.is_draft && query.id != undefined && (isQueryOwner || currentUser.hasPermission('admin'))">
+		<span class="fa fa-paper-plane"></span> Publish
+		</button>
+ -->
+		<span *ngIf="query.id && canViewSource">
+		<!-- <a *ngIf="!sourceMode" href="{{query.getUrl(true, selectedTab)}}" class="btn btn-default btn--showhide">
+		<i class="fa fa-code" aria-hidden="true"> Edit Source</i>
+		</a> -->
+		<!-- <a *ngIf="sourceMode" href="{{query.getUrl(false, selectedTab)}}" class="btn btn-default btn--showhide">
+		<i class="fa fa-table" aria-hidden="true"> Show Data Only</i>
+		</a> -->
+		</span>
+	</div>
+</div>

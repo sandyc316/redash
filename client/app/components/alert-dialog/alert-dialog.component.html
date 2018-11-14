@@ -1,0 +1,10 @@
+<div class="modal-header">
+	<h4 class="modal-title" *ngIf="title">{{title}}</h4>
+</div>
+<div class="modal-body">
+	<p [innerHTML]="message"></p>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-default" (click)="activeModal.dismiss('cancel')">Cancel</button>
+	<button class="btn {{confirmClass}}" (click)="activeModal.close('confirm')">{{confirmTitle}}</button>
+</div>

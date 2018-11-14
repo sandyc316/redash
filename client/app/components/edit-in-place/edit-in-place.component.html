@@ -1,0 +1,5 @@
+<div class="edit-in-place" [ngClass]="{active: editing}">
+	<span (click)="editable && edit()" [innerHTML]="value" class="editable"></span>
+	<span (click)="editable && edit()" *ngIf="editable && !value" class="editable">{{placeholder}}</span>
+	<input #editInput [(ngModel)]="value" class="rd-form-control" (blur)="save()" />
+</div>

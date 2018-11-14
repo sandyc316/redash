@@ -1,18 +1,24 @@
 FROM redash/base:latest
 
-# Controls whether to install extra dependencies needed for all data sources.
-ARG skip_ds_deps
-
 # We first copy only the requirements file, to avoid rebuilding on every file
 # change.
 COPY requirements.txt requirements_dev.txt requirements_all_ds.txt ./
-RUN pip install -r requirements.txt -r requirements_dev.txt
-RUN if [ "x$skip_ds_deps" = "x" ] ; then pip install -r requirements_all_ds.txt ; else echo "Skipping pip install -r requirements_all_ds.txt" ; fi
+RUN pip install -r requirements.txt 
+RUN echo "******************************          Installed default requirements        ******************************"
+
+
+RUN pip install -r requirements_dev.txt
+RUN pip install -r requirements_all_ds.txt
 
 COPY . ./
-RUN npm install && npm run bundle && npm run build && rm -rf node_modules
+
+# Install node version greater than 8. 
+RUN apt-get update -yq \
+    && apt-get install curl gnupg -yq \
+    && curl -sL https://deb.nodesource.com/setup_8.x | bash \
+    && apt-get install nodejs -yq
+ 
+RUN npm install 
+#RUN npm run build
 RUN chown -R redash /app
 USER redash
-
-ENTRYPOINT ["/app/bin/docker-entrypoint"]
-CMD ["server"]

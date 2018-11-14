@@ -107,18 +107,21 @@ class DataSourceListResource(BaseResource):
     @require_admin
     def post(self):
         req = request.get_json(True)
+        print (req)
         required_fields = ('options', 'name', 'type')
         for f in required_fields:
             if f not in req:
                 abort(400)
 
         schema = get_configuration_schema_for_query_runner_type(req['type'])
+        print (schema)
         if schema is None:
             abort(400)
 
         config = ConfigurationContainer(filter_none(req['options']), schema)
         # from IPython import embed
         # embed()
+        print (config)
         if not config.is_valid():
             abort(400)
 

@@ -1,0 +1,33 @@
+.plotly-chart-container {
+  height: 400px;
+  overflow: hidden;
+}
+
+app-charts {
+	display: flex;
+	flex-grow: 1;
+	padding: 20px;
+
+	.chart-editor {
+		display: flex;
+		flex-grow: 1;
+
+		.chart-options {
+			flex-basis: 30%;
+		}
+	
+		.chart-panel {
+			display: flex;
+			flex-grow: 1;
+			border: 1px solid #efefef;
+			margin-left: 20px;
+
+			.chart-div {
+				display: flex;
+				flex-grow: 1;
+			}
+		}
+	}
+}
+
+

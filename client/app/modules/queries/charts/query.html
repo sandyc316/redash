@@ -1,0 +1,14 @@
+<div class="query-page-wrapper">
+	<div class="container">
+		<h3> {{query.name}} </h3>
+		<div class="action-btns add-chart-to-dash">
+			<button class="btn btn-default " (click)="addToDashboard()">
+				<span class="zmdi zmdi-plus"></span>
+				Add to Dashboard
+			</button>
+		</div>
+	</div>
+	<main class="query-fullscreen">
+		<app-charts [rows]="rows" [cols]="columns" [selectedX]="selX" [selectedY]="selY" [chartName]="name" [selectedType]="type" (save)="saveChart($event)" (cancel)="cancelChart($event)"></app-charts>
+	</main>
+</div>

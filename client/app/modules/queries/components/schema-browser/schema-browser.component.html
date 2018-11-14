@@ -1,0 +1,30 @@
+<div class="schema-container" *ngIf="_schema">
+	<div class="schema-control">
+		<input type="text" placeholder="Search schema..." class="form-control" [formControl]="schemaFilter" [disabled]="isEmpty()">
+			<button class="btn btn-default"
+			title="Refresh Schema"
+			(click)="onRefresh()">
+				<span class="zmdi zmdi-refresh"></span>
+			</button>
+	</div>
+	<div class="schema-browser" vs-repeat vs-size="getSize(table)">
+		<div *ngFor="let table of filteredSchema">
+			<div class="table-name" (click)="showTable(table)">
+				<i class="fa fa-table"></i>
+				<strong>
+					<span title="{{table.name}}">{{table.name}}</span>
+					<span *ngIf="size !== undefined"> ({{table.size}})</span>
+				</strong>
+				<i class="fa fa-angle-double-right copy-to-editor" aria-hidden="true"
+				(click)="itemSelected($event, [table.name])"></i>
+			</div>
+			<div [ngClass]="{active: table.collapsed}">
+				<div *ngFor="let column of table.columns" class="table-open" >
+					{{column}}
+					<i class="fa fa-angle-double-right copy-to-editor" aria-hidden="true"
+					(click)="itemSelected($event, [column])"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

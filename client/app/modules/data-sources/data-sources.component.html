@@ -1,0 +1,20 @@
+<settings-screen>
+	<div class="row">
+		<div class="col-md-12">
+			<p>
+				<a href="data_sources/new" class="btn btn-primary" >
+					<i class="fa fa-plus"></i> New Data Source
+				</a>
+				<!-- <datasources-list-extra></datasources-list-extra> -->
+			</p>
+			<div class="database-source">
+				<div *ngFor="let dataSource of dataSources">
+					<a class="visual-card" href="data_sources/{{dataSource.id}}"  title="{{dataSource.name}}">
+						<img src="/static/images/db-logos/{{dataSource.type}}.png" alt="{{dataSource.name}}">
+						<h3>{{dataSource.name}}</h3>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</settings-screen>

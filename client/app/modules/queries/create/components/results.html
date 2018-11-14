@@ -1,0 +1,48 @@
+<div class="query__vis scrollbox">
+	<div *ngIf="_query && !_query.visualizations">
+		<ngx-datatable class="bootstrap" 
+			[rows]="rows"
+			[columns]="columns"
+			[columnMode]="'force'"
+	        [headerHeight]="40"
+	        [footerHeight]="40"
+	        [rowHeight]="40"
+	        [scrollbarH]="true"
+        	[limit]="10"
+		></ngx-datatable>
+	</div>
+	<ngb-tabset *ngIf="_query.visualizations && _query.visualizations.length">
+		<ngb-tab *ngFor="let vis of _query.visualizations">
+			<ng-template ngbTabTitle>
+				{{vis.name}}
+			</ng-template>
+			<ng-template ngbTabContent *ngIf="vis.type === 'TABLE'">
+				<ngx-datatable class="bootstrap" 
+					[rows]="rows"
+					[columns]="columns"
+					[columnMode]="'force'"
+			        [headerHeight]="40"
+			        [footerHeight]="40"
+			        [rowHeight]="40"
+			        [scrollbarH]="true"
+		        	[limit]="10"
+				></ngx-datatable>
+			</ng-template>
+			<ng-template ngbTabContent *ngIf="vis.type !== 'TABLE'">
+				<span class="tab-remove-chart" (click)="deleteVisualization($event, vis)">
+					<i class="zmdi zmdi-close"></i> Remove
+				</span>
+				<span class="tab-edit-chart" (click)="openVisualizationEditor(vis)">
+					<i class="zmdi zmdi-edit"></i> Edit
+				</span>
+				<visualization-renderer [query]="_query" [options]="vis.options" [type]="vis.type"></visualization-renderer>
+			</ng-template>
+		</ngb-tab>
+	</ngb-tabset>
+</div>
+
+
+
+<!-- <div *ngIf="selectedTab == vis.id" ngFor="vis in _query.visualizations" class="query__vis m-t-15 scrollbox">
+	<visualization-renderer visualization="vis" query-result="query.queryResult"></visualization-renderer>
+</div> -->

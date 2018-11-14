@@ -82,9 +82,9 @@ def init_celery_flask_app(**kwargs):
 
 
 # Hook for extensions to add periodic tasks.
-@celery.on_after_configure.connect
-def add_periodic_tasks(sender, **kwargs):
-    app = create_app()
-    periodic_tasks = getattr(app, 'periodic_tasks', {})
-    for params in periodic_tasks.values():
-        sender.add_periodic_task(**params)
+# @celery.on_after_configure.connect
+# def add_periodic_tasks(sender, **kwargs):
+#     app = create_app()
+#     periodic_tasks = getattr(app, 'periodic_tasks', {})
+#     for params in periodic_tasks.values():
+#         sender.add_periodic_task(**params)

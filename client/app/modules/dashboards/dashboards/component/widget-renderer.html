@@ -1,0 +1,7 @@
+<div *ngIf="rows" class="widget-charts">
+
+	<app-charts [showOnlyChart]="onlyChart" [selectedX]="selX" [selectedY]="selY" [rows]="rows" [cols]="cols" [selectedType]="type" ></app-charts>
+</div>
+<!-- <div *ngIf="type === 'table'">
+	<app-charts [rows]="rows" [cols]="cols" ></app-charts>
+</div> -->

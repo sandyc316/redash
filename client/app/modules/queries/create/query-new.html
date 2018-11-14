@@ -1,0 +1,42 @@
+<div class="query-page-wrapper">
+	<div class="container">
+		<!-- <alert-unsaved-changes ng-if="canEdit" is-dirty="isDirty"></alert-unsaved-changes> -->
+		
+		<query-header [query]="query" (onNameChanged)="saveQueryName($event)" (onFavorite)="setQueryAsFav()"></query-header>
+	</div>
+
+	<main class="query-fullscreen">
+		<nav class="resizable" r-directions="['right']" r-flex="true" resizable-toggle toggle-shortcut="Alt+Shift+D, Alt+D">
+			<query-schema (onDSChange)="onDataSourceChange($event)" (onDSRefresh)="onDataSourceRefresh($event)" [(query)]="query" [(dsID)]="query.data_source_id" [schema]="schema" [dataSources]="dataSources"></query-schema>
+		</nav>
+		
+		<div class="flex-fill p-relative">
+			<div class="p-absolute d-flex flex-column p-l-15 p-r-15" style="left: 0; top: 0; right: 0; bottom: 0;">
+				<query-editor [query]="query" (onQueryExecute)="executeQuery($event)" (onQuerySave)="saveQuery($event)">
+				</query-editor>
+
+				<div class="query-results-div">
+					<div *ngIf="query.queryResult">
+						<query-results [columns]="columns" [rows]="rows" [query]="query"></query-results>
+					</div>
+				</div>
+
+				<div class="bottom-controller-container">
+					<div class="btn-group navbar-btn navbar-left btn__new hidden-xs" >
+						<button mat-button [matMenuTriggerFor]="menu" class="btn btn-primary btn--create">
+							Download Dataset
+						</button>
+						<mat-menu #menu="matMenu" [overlapTrigger]="false">
+							<a mat-menu-item href="queries/new">Download as CSV File</a>
+							<a mat-menu-item href="dashboard">Download as Excel File</a>
+						</mat-menu>
+					</div>
+					<div *ngIf="query.queryResult">
+						<button class="btn btn-default btn__new" style="margin-top: 10px;" (click)="openVisualizationEditor()"> +New Visualization</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</main>
+</div>

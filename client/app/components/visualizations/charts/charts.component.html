@@ -1,0 +1,120 @@
+
+<div class="chart-editor">
+	<div *ngIf="!showOnlyChart" class="chart-options">
+		<div name="visForm">
+			<div class="form-group">
+				<label class="control-label">Chart Type</label>
+				<ng-select 
+					[items]="chartTypes"
+					[allowClear]="false"
+					(data)="onChartTypeChange($event)"
+					[active]="[currentType]"
+					placeholder="Select a chart type">
+				</ng-select>
+			</div>
+
+			<div class="form-group">
+				<label class="control-label">Chart Name</label>
+				<input type="text" class="form-control" [(ngModel)]="_name"
+				placeholder="Enter a chart name" (ngModelChange)="nameChange.emit($event)">
+			</div>
+
+			<div class="form-group">
+				<label class="control-label">X Column</label>
+				<div *ngIf="_cols">
+					<ng-select
+						[items]="_cols"
+						[allowClear]="false"
+						(data)="onXColChange($event)"
+						[active]="[xCol]"
+						placeholder="Select a X column">
+					</ng-select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="control-label">Y Columns</label>
+				<ng-select
+					[multiple]="true" 
+					[items]="_cols"
+					[allowClear]="true"
+					(data)="onYColChange($event)"
+					[active]="yCols"
+					placeholder="Select a Y column">
+				</ng-select>
+			</div>
+		</div>
+		<div *ngIf="!showOnlyChart" class="action-btns">
+			<button class="btn btn-default" (click)="saveChart($event)">
+				<span class="zmdi zmdi-floppy">&nbsp;</span>Save
+			</button>
+			<!-- <button class="btn btn-default" (click)="cancelChart($event)">Cancel</button> -->
+		</div>
+	</div>
+	<div class="chart-panel">
+		<div *ngIf="currentType === 'BAR-VERTICAL-CHART'" class="chart-div">
+			<ngx-charts-bar-vertical
+				[scheme]="colorScheme"
+				[results]="data"
+				[xAxis]="showXAxis"
+				[yAxis]="showYAxis"
+				[legend]="showLegend"
+				[showXAxisLabel]="showXAxisLabel"
+				[showYAxisLabel]="showYAxisLabel"
+				[xAxisLabel]="xAxisLabel"
+				[yAxisLabel]="yAxisLabel"
+				(select)="onSelect($event)">
+			</ngx-charts-bar-vertical>
+		</div>
+		<div *ngIf="currentType === 'BAR-HORIZONTAL-CHART'" class="chart-div">
+			<ngx-charts-bar-horizontal
+				[scheme]="colorScheme"
+				[results]="data"
+				[xAxis]="showXAxis"
+				[yAxis]="showYAxis"
+				[legend]="showLegend"
+				[showXAxisLabel]="showXAxisLabel"
+				[showYAxisLabel]="showYAxisLabel"
+				[xAxisLabel]="xAxisLabel"
+				[yAxisLabel]="yAxisLabel"
+				(select)="onSelect($event)">
+			</ngx-charts-bar-horizontal>
+		</div>
+		<div *ngIf="currentType === 'LINE-CHART'" class="chart-div">
+			<ngx-charts-line-chart
+				[scheme]="colorScheme"
+				[results]="data"
+				[xAxis]="showXAxis"
+				[yAxis]="showYAxis"
+				[legend]="showLegend"
+				[showXAxisLabel]="showXAxisLabel"
+				[showYAxisLabel]="showYAxisLabel"
+				[xAxisLabel]="xAxisLabel"
+				[yAxisLabel]="yAxisLabel"
+				(select)="onSelect($event)">
+			</ngx-charts-line-chart>
+		</div>
+		<div *ngIf="currentType === 'AREA-CHART'" class="chart-div">
+			<ngx-charts-area-chart
+				[scheme]="colorScheme"
+				[results]="data"
+				[xAxis]="showXAxis"
+				[yAxis]="showYAxis"
+				[legend]="showLegend"
+				[showXAxisLabel]="showXAxisLabel"
+				[showYAxisLabel]="showYAxisLabel"
+				[xAxisLabel]="xAxisLabel"
+				[yAxisLabel]="yAxisLabel"
+				(select)="onSelect($event)">
+			</ngx-charts-area-chart>
+		</div>
+		<div *ngIf="currentType === 'PIE-CHART'" class="chart-div">
+			<ngx-charts-pie-chart
+				[scheme]="colorScheme"
+				[results]="data"
+				[legend]="showLegend"
+				(select)="onSelect($event)">
+			</ngx-charts-pie-chart>
+		</div>
+	</div>
+</div>

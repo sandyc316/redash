@@ -1,0 +1,21 @@
+
+	<div *ngIf="_dataSources" class="editor__left__data-source">
+		<ng-select [items]="_dataSources"
+			[multiple]="false"
+			bindValue="id"
+			[allowClear]="false"
+			(data)="onSourceChange($event)"
+			[active]="selected_ds"
+			placeholder="Select a data source">
+		</ng-select>
+	</div>
+
+	<div class="editor__left__schema" *ngIf="sourceMode">
+		<schema-browser class="schema-container" [schema]="schema" (refreshschema)="refreshSchema()"></schema-browser>
+	</div>
+	<div *ngIf="!sourceMode" style="flex-grow: 1;">&nbsp;</div>
+
+	<div class="query-metadata query-metadata--description">
+		<edit-in-place [editable]="canEdit" (done)="saveDescription($event)" [ignoreBlanks]='false' [(value)]="_query.description">
+		</edit-in-place>
+	</div>

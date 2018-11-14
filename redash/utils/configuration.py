@@ -42,6 +42,8 @@ class ConfigurationContainer(Mutable):
         return True
 
     def validate(self):
+        print (self._config)
+        print (self._schema)
         jsonschema.validate(self._config, self._schema)
 
     def to_json(self):
