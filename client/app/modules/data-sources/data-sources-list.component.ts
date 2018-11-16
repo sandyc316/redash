@@ -129,6 +129,7 @@ export class DataSourcesList {
 
 	update() {
 		this.correctFieldTypes();
+		
 		this.dataSource.update().subscribe((resp) => {
 			this.toastr.success('Data source updated successfully');
         }, (err) => {
@@ -159,8 +160,6 @@ export class DataSourcesList {
 	        	}
 	        }
 	    }
-
-	    console.log(this.dataSource.options);
 	}
 
 	deleteDataSource() {

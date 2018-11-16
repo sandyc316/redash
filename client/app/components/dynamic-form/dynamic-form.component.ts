@@ -20,11 +20,8 @@ function orderedInputs(properties, order) {
 }
 
 function normalizeSchema(configurationSchema) {
-    console.log("configurationSchema in dynamic forms is ", configurationSchema.properties);
     for (const key in configurationSchema.properties) {
-        // console.log(key);
         let prop = configurationSchema.properties[key];
-        // console.log(prop);
         if (prop['name'] === 'password' || prop['name'] === 'passwd') {
             prop.type = 'password';
         }
@@ -78,28 +75,6 @@ export class DynamicFormComponent {
         normalizeSchema(configurationSchema);
         this.fields = orderedInputs(configurationSchema.properties, configurationSchema.order);
         setDefaults(configurationSchema, this.target.options);
-
-        // console.log(this.target.options);
-
-        // if (this.actions) {
-        //     this.actions.forEach((action) => {
-        //         const originalCallback = action.callback;
-        //         const name = action.name;
-                
-        //         action.callback = () => {
-        //             action.name = '<i class="zmdi zmdi-spinner zmdi-hc-spin"></i> ${name}';
-
-        //             this.inProgressActions[action.name] = true;
-                    
-        //             function release() {
-        //                 this.inProgressActions[action.name] = false;
-        //                 action.name = name;
-        //             }
-
-        //             originalCallback(release);
-        //         };
-        //     });
-        // }
     }
 
     onBtnClick(btnName) {
