@@ -1,5 +1,5 @@
 <div class="container">
-	<div style="padding-bottom: 5px;" *ngIf="widgets.length > 0">
+	<div style="padding-bottom: 5px;" *ngIf="widgets && widgets.length > 0">
 		<div class="col-sm-6 dashboard-widget-wrapper"
 			*ngFor="let widget of widgets">
 			<div class="grid-stack-item-content">

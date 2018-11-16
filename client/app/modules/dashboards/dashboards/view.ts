@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 
 import { DashboardService } from '@app/services/dashboards';
 import { AlertDialogComponent } from '@app/components/alert-dialog/alert-dialog.component';
@@ -18,7 +19,8 @@ export class DashboardView {
 	constructor(private dashService: DashboardService,
 				private router: Router,
 				private activRoute: ActivatedRoute,
-				private modalService: NgbModal) {
+				private modalService: NgbModal,
+				public toastr: ToastrService) {
 
 		this.activRoute.params.subscribe( params => {
 			if (params.id) {
@@ -36,6 +38,7 @@ export class DashboardView {
 			this.dashService.get('my').subscribe((resp) => {
 				this.dashboard = resp;
 				this.widgets = resp.widgets;
+
 				
 			}, (err) => {
 				console.log("Fetching dashboard error", err);
@@ -52,7 +55,7 @@ export class DashboardView {
 			this.dashService.save('my').subscribe((resp) => {
 				this.dashboard = resp;
 				this.widgets = resp.widgets;
-				
+
 			}, (err) => {
 				console.log("Fetching dashboard error", err);
 			});
@@ -63,8 +66,6 @@ export class DashboardView {
 	}
 
 	removeWidgetFromDashboard(widgetId) {
-		console.log(widgetId);
-		console.log("Opening delete dashboard widget modal");
 		const modalRef = this.modalService.open(AlertDialogComponent);
     	modalRef.componentInstance.title = "Remove widget?";
     	modalRef.componentInstance.message = "Do you really want to remove the widget from the dashboard?";
@@ -74,16 +75,15 @@ export class DashboardView {
     	modalRef.result.then((result) => {
 			this.dashService.removeWidget(widgetId).subscribe((resp) => {
 				console.log('Widget deleted successfully.');
+				this.toastr.success('Widget deleted successfully.');
 				this.widgets = this.widgets.filter(widget => widget.id !== widgetId);
 				
 			}, (httpResponse) => {
 				console.log('Failed to delete data source.');
-				// logger('Failed to delete data source: ', httpResponse.status, httpResponse.statusText, httpResponse.data);
-				// toastr.error('Failed to delete data source.');
+				this.toastr.error('Failed to delete the widget. Please try again later.');
 			});
 		}, (reason) => {
 			console.log(reason);
-			// this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
 		});
 	}
 }

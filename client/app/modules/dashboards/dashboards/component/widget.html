@@ -4,14 +4,14 @@
 			<div class="t-header widget clearfix">
 				<div class="dropdown pull-right widget-menu-remove">
 					<div class="actions">
-						<a (click)="deleteWidget(_widget.id)" title="Remove From Dashboard"><i class="zmdi zmdi-close"></i></a>
+						<a *ngIf="_widget" (click)="deleteWidget(_widget.id)" title="Remove From Dashboard"><i class="zmdi zmdi-close"></i></a>
 					</div>
 				</div>
 				<div class="th-title">
 					<p >
-						<span >{{_widget.visualization.name}}</span>
+						<span *ngIf="_widget && _widget.visualization" >{{_widget.visualization.name}}</span>
 					</p>
-					<div class="text-muted query--description" [innerHtml]="_widget.visualization.description"></div>
+					<div class="text-muted query--description" *ngIf="_widget && _widget.visualization" [innerHtml]="_widget.visualization.description"></div>
 				</div>
 			</div>
 		</div>

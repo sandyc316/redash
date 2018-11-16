@@ -14,9 +14,11 @@ export class DashboardWidget {
 	set widget(widget) {
 		if (widget) {
 			this._widget = widget;
-			Object.assign(this.qs, widget.visualization.query);
-			this.type = widget.visualization.type;
-			this.getQueryResult();
+			if (widget.visualization) {
+				Object.assign(this.qs, widget.visualization.query);
+				this.type = widget.visualization.type;
+				this.getQueryResult();
+			}
 		}
 	}
 
@@ -56,7 +58,6 @@ export class DashboardWidget {
 	}
 
 	deleteWidget(id) {
-		console.log("Trying to delete widget with id ", this._widget.id);
 		this.removeWidget.emit(id);
 	}
 }
