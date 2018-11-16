@@ -22,13 +22,17 @@
 				</div>
 
 				<div class="bottom-controller-container">
-					<div class="btn-group navbar-btn navbar-left btn__new hidden-xs" >
+					<div *ngIf="query.queryResult" class="btn-group navbar-btn navbar-left btn__new hidden-xs" >
 						<button mat-button [matMenuTriggerFor]="menu" class="btn btn-primary btn--create">
 							Download Dataset
 						</button>
 						<mat-menu #menu="matMenu" [overlapTrigger]="false">
-							<a mat-menu-item href="queries/new">Download as CSV File</a>
-							<a mat-menu-item href="dashboard">Download as Excel File</a>
+							<a mat-menu-item query-result-link target="_self" href="/api/query_results/{{query.queryResult.query_result.id}}.csv">
+								<span class="fa fa-file-o"></span> Download as CSV File
+							</a>
+							<a mat-menu-item query-result-link file-type="xlsx" target="_self" href="/api/query_results/{{query.queryResult.query_result.id}}.xlsx">
+								<span class="fa fa-file-excel-o"></span> Download as Excel File
+							</a>
 						</mat-menu>
 					</div>
 					<div *ngIf="query.queryResult">
